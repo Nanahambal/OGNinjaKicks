@@ -1,0 +1,100 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "sneakers"
+    label: "Sneakers"
+    folder: "content/sneakers"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Brand", name: "brand", widget: "select", options: ["Nike", "Jordan", "Adidas", "New Balance", "Other"]}
+      - {label: "Price", name: "price", widget: "number"}
+      - {label: "Original Price", name: "originalPrice", widget: "number", required: false}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Category", name: "category", widget: "select", options: ["Early Access", "Exclusive Drops", "Archive"]}
+      - {label: "Available Sizes", name: "sizes", widget: "list", default: ["8", "8.5", "9", "9.5", "10", "10.5", "11"]}
+      - {label: "Time Left", name: "timeLeft", widget: "string", required: false}
+      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5, step: 0.1}
+      - {label: "Is Exclusive", name: "isExclusive", widget: "boolean", default: true}
+      - {label: "Description", name: "description", widget: "text", required: false}
+
+  - name: "news"
+    label: "News & Intel"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Snippet", name: "snippet", widget: "text"}
+      - {label: "Category", name: "category", widget: "select", options: ["Rumor Mill", "Confirmed Drops", "Style Guide", "Collabs"]}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Read Time (minutes)", name: "readTime", widget: "number"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Content", name: "body", widget: "markdown"}
+
+  - name: "raffles"
+    label: "Raffles"
+    folder: "content/raffles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Sneaker Name", name: "sneakerName", widget: "string"}
+      - {label: "Sneaker Image", name: "sneakerImage", widget: "image"}
+      - {label: "Sneaker Price", name: "sneakerPrice", widget: "number"}
+      - {label: "End Date", name: "endDate", widget: "datetime"}
+      - {label: "Total Entries", name: "totalEntries", widget: "number"}
+      - {label: "Max Entries", name: "maxEntries", widget: "number"}
+      - {label: "Entry Price", name: "entryPrice", widget: "number"}
+      - {label: "Winners", name: "winners", widget: "list", required: false}
+      - {label: "Status", name: "status", widget: "select", options: ["Active", "Ended", "Coming Soon"]}
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "General Settings"
+        name: "general"
+        file: "content/settings/general.yml"
+        fields:
+          - {label: "Site Title", name: "siteTitle", widget: "string", default: "OG Ninja Kicks"}
+          - {label: "Site Description", name: "siteDescription", widget: "text"}
+          - {label: "Contact Email", name: "contactEmail", widget: "string"}
+          - {label: "Social Media Links", name: "socialMedia", widget: "object", fields: [
+              {label: "Instagram", name: "instagram", widget: "string", required: false},
+              {label: "Twitter", name: "twitter", widget: "string", required: false},
+              {label: "Discord", name: "discord", widget: "string", required: false}
+            ]}
+
+      - label: "Homepage Settings"
+        name: "homepage"
+        file: "content/settings/homepage.yml"
+        fields:
+          - {label: "Hero Title", name: "heroTitle", widget: "string", default: "WELCOME TO THE DOJO"}
+          - {label: "Hero Subtitle", name: "heroSubtitle", widget: "string"}
+          - {label: "Featured Sneaker Name", name: "featuredSneakerName", widget: "string"}
+          - {label: "Featured Sneaker Price", name: "featuredSneakerPrice", widget: "number"}
+          - {label: "Featured Sneaker Image", name: "featuredSneakerImage", widget: "image"}
+          - {label: "Next Drop Countdown Days", name: "nextDropDays", widget: "number", default: 5}
+
+  - name: "members"
+    label: "Hall of Fame"
+    folder: "content/members"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Username", name: "username", widget: "string"}
+      - {label: "XP Points", name: "xp", widget: "number"}
+      - {label: "Raffles Won", name: "rafflesWon", widget: "number"}
+      - {label: "Badge", name: "badge", widget: "select", options: ["Bronze Ninja", "Silver Shinobi", "Shadow Master"]}
+      - {label: "Avatar", name: "avatar", widget: "image"}
+      - {label: "Member Since", name: "memberSince", widget: "datetime"}
+      - {label: "Flex Photos", name: "flexPhotos", widget: "list", fields: [
+          {label: "Sneaker Name", name: "sneaker", widget: "string"},
+          {label: "Photo", name: "image", widget: "image"},
+          {label: "Likes", name: "likes", widget: "number", default: 0}
+        ], required: false}

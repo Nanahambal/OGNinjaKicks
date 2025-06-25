@@ -1,0 +1,80 @@
+/* Custom preview styles for Netlify CMS */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+  color: white;
+  line-height: 1.6;
+}
+
+.cms-preview-content {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(45deg, #96F700, #6C00FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #96F700;
+  margin: 2rem 0 1rem 0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #6C00FF;
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: #e5e5e5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 1rem 0;
+  box-shadow: 0 10px 30px rgba(150, 247, 0, 0.2);
+}
+
+.sneaker-preview {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(150, 247, 0, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #96F700;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(45deg, #96F700, #6C00FF);
+  color: black;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
