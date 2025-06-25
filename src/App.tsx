@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout/Layout';
 import LoginForm from './components/Auth/LoginForm';
+import ResetPassword from './components/Auth/ResetPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Shop from './components/Shop/Shop';
 import Raffle from './components/Raffle/Raffle';
@@ -69,6 +70,7 @@ const App = () => {
         <AdminNotice />
         <Routes>
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />

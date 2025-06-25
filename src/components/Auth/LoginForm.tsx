@@ -1,25 +1,66 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Lock, Mail, Shield } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, Shield, UserPlus } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const LoginForm = () => {
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const { signIn, signUp, resetPassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
+    setMessage('');
+
     try {
-      await login(email, password);
+      if (isSignUp) {
+        if (!name.trim()) {
+          setError('Name is required');
+          return;
+        }
+        const { error } = await signUp(email, password, name);
+        if (error) {
+          setError(error);
+        } else {
+          setMessage('Check your email for verification link!');
+        }
+      } else {
+        const { error } = await signIn(email, password);
+        if (error) {
+          setError(error);
+        }
+      }
     } catch (error) {
-      console.error('Login failed:', error);
+      setError('An unexpected error occurred');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setError('Please enter your email first');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    const { error } = await resetPassword(email);
+    
+    if (error) {
+      setError(error);
+    } else {
+      setMessage('Password reset email sent!');
+    }
+    setLoading(false);
   };
 
   return (
@@ -59,15 +100,15 @@ const LoginForm = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
           >
             <h1 className="text-4xl font-display font-black text-white mb-3 tracking-wider">
-              ONLY <span className="text-neon-green">OGs</span> ALLOWED IN
+              {isSignUp ? 'JOIN THE' : 'ONLY'} <span className="text-neon-green">DOJO</span>
             </h1>
             <p className="text-gray-400 text-lg font-medium">
-              Enter the underground. Access the vault.
+              {isSignUp ? 'Become a ninja. Access the vault.' : 'Enter the underground. Access the vault.'}
             </p>
           </motion.div>
         </div>
 
-        {/* Login Form */}
+        {/* Auth Form */}
         <motion.form
           onSubmit={handleSubmit}
           className="bg-black/40 backdrop-blur-xl p-8 rounded-2xl border border-gray-800/50 shadow-2xl relative overflow-hidden"
@@ -79,6 +120,38 @@ const LoginForm = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-neon-green/5 to-neon-purple/5 rounded-2xl"></div>
           
           <div className="relative z-10 space-y-6">
+            {/* Error/Success Messages */}
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-3 text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+            {message && (
+              <div className="bg-neon-green/20 border border-neon-green/50 rounded-xl p-3 text-neon-green text-sm">
+                {message}
+              </div>
+            )}
+
+            {/* Name Field (Sign Up Only) */}
+            {isSignUp && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wider">
+                  Ninja Name
+                </label>
+                <div className="relative">
+                  <UserPlus className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-12 pr-4 py-4 bg-dark-800/80 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-green/50 focus:border-neon-green/50 transition-all duration-300 backdrop-blur-sm"
+                    placeholder="Enter your ninja name"
+                    required={isSignUp}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Email Field */}
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wider">
@@ -109,8 +182,9 @@ const LoginForm = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-12 py-4 bg-dark-800/80 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-green/50 focus:border-neon-green/50 transition-all duration-300 backdrop-blur-sm"
-                  placeholder="Enter your secret code"
+                  placeholder={isSignUp ? "Create a strong password" : "Enter your secret code"}
                   required
+                  minLength={isSignUp ? 6 : undefined}
                 />
                 <button
                   type="button"
@@ -134,16 +208,42 @@ const LoginForm = () => {
               <div className="relative z-10 flex items-center justify-center space-x-2">
                 <Shield size={20} />
                 <span className="text-lg font-black tracking-wider">
-                  {loading ? 'ACCESSING DOJO...' : 'UNLOCK THE DOJO'}
+                  {loading 
+                    ? (isSignUp ? 'CREATING NINJA...' : 'ACCESSING DOJO...') 
+                    : (isSignUp ? 'JOIN THE DOJO' : 'UNLOCK THE DOJO')
+                  }
                 </span>
               </div>
             </motion.button>
-          </div>
 
-          <div className="mt-8 text-center">
-            <p className="text-gray-500 text-sm">
-              Demo Access: Use any email and password
-            </p>
+            {/* Toggle Sign Up/Sign In */}
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setError('');
+                  setMessage('');
+                }}
+                className="text-neon-green hover:text-neon-purple transition-colors font-semibold"
+              >
+                {isSignUp ? 'Already a ninja? Sign in' : 'New ninja? Join the dojo'}
+              </button>
+            </div>
+
+            {/* Forgot Password */}
+            {!isSignUp && (
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  disabled={loading}
+                >
+                  Forgot your secret code?
+                </button>
+              </div>
+            )}
           </div>
         </motion.form>
 
