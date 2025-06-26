@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block admin area from search engines
+User-agent: *
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://ogninjakicks.com/sitemap.xml
