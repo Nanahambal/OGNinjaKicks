@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Lock, Mail, Shield, UserPlus } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import PaymentForm from './PaymentForm';
 
 const LoginForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -26,12 +28,8 @@ const LoginForm = () => {
           setError('Name is required');
           return;
         }
-        const { error } = await signUp(email, password, name);
-        if (error) {
-          setError(error);
-        } else {
-          setMessage('Check your email for verification link!');
-        }
+        // For signup, show payment form instead of creating account immediately
+        setShowPayment(true);
       } else {
         const { error } = await signIn(email, password);
         if (error) {
@@ -40,6 +38,27 @@ const LoginForm = () => {
       }
     } catch (error) {
       setError('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePaymentSuccess = async (paymentIntentId: string) => {
+    setLoading(true);
+    try {
+      // Now create the account after successful payment
+      const { error } = await signUp(email, password, name);
+      if (error) {
+        setError(error);
+        setShowPayment(false);
+      } else {
+        setMessage('Account created successfully! Check your email for verification.');
+        // You would also want to store the payment information in your database here
+        console.log('Payment successful:', paymentIntentId);
+      }
+    } catch (error) {
+      setError('Account creation failed after payment. Please contact support.');
+      setShowPayment(false);
     } finally {
       setLoading(false);
     }
@@ -62,6 +81,18 @@ const LoginForm = () => {
     }
     setLoading(false);
   };
+
+  // Show payment form if user is signing up and has filled basic info
+  if (showPayment) {
+    return (
+      <PaymentForm
+        onPaymentSuccess={handlePaymentSuccess}
+        onBack={() => setShowPayment(false)}
+        userEmail={email}
+        userName={name}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-dark-900 to-dark-800 flex items-center justify-center px-4 relative overflow-hidden">
@@ -129,6 +160,20 @@ const LoginForm = () => {
             {message && (
               <div className="bg-neon-green/20 border border-neon-green/50 rounded-xl p-3 text-neon-green text-sm">
                 {message}
+              </div>
+            )}
+
+            {/* Membership Notice for Sign Up */}
+            {isSignUp && (
+              <div className="bg-gradient-to-r from-neon-purple/20 to-neon-green/20 border border-neon-green/30 rounded-xl p-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Shield className="text-neon-green" size={16} />
+                  <span className="text-neon-green font-bold text-sm uppercase tracking-wider">Premium Membership</span>
+                </div>
+                <p className="text-gray-300 text-sm">
+                  Join our exclusive ninja community with premium membership starting at <span className="text-neon-green font-bold">₹24.99/month</span>. 
+                  Payment required to complete registration.
+                </p>
               </div>
             )}
 
@@ -209,8 +254,8 @@ const LoginForm = () => {
                 <Shield size={20} />
                 <span className="text-lg font-black tracking-wider">
                   {loading 
-                    ? (isSignUp ? 'CREATING NINJA...' : 'ACCESSING DOJO...') 
-                    : (isSignUp ? 'JOIN THE DOJO' : 'UNLOCK THE DOJO')
+                    ? (isSignUp ? 'PROCESSING...' : 'ACCESSING DOJO...') 
+                    : (isSignUp ? 'CONTINUE TO PAYMENT' : 'UNLOCK THE DOJO')
                   }
                 </span>
               </div>
@@ -224,6 +269,7 @@ const LoginForm = () => {
                   setIsSignUp(!isSignUp);
                   setError('');
                   setMessage('');
+                  setShowPayment(false);
                 }}
                 className="text-neon-green hover:text-neon-purple transition-colors font-semibold"
               >
