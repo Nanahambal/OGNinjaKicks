@@ -18,6 +18,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted with:', { email, password, isSignUp }); // Debug log
     setLoading(true);
     setError('');
     setMessage('');
@@ -31,12 +32,17 @@ const LoginForm = () => {
         // For signup, show payment form instead of creating account immediately
         setShowPayment(true);
       } else {
+        console.log('Attempting sign in...'); // Debug log
         const { error } = await signIn(email, password);
+        console.log('Sign in result:', { error }); // Debug log
         if (error) {
           setError(error);
+        } else {
+          console.log('Sign in successful!'); // Debug log
         }
       }
     } catch (error) {
+      console.log('Sign in exception:', error); // Debug log
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);
