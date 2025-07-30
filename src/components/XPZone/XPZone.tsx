@@ -1,10 +1,52 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Trophy, Target, Users, ShoppingBag, MessageCircle, Share2, Crown, Star } from 'lucide-react';
+import { Zap, Trophy, Target, Users, ShoppingBag, MessageCircle, Share2, Crown, Star, X, CreditCard } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const XPZone = () => {
   const { user } = useAuth();
+  const [showBoostModal, setShowBoostModal] = React.useState(false);
+  const [selectedBoost, setSelectedBoost] = React.useState<string | null>(null);
+
+  const boostPackages = [
+    {
+      id: 'starter',
+      name: 'Starter Boost',
+      xp: 500,
+      price: 9.99,
+      popular: false,
+      description: 'Perfect for new ninjas looking to level up quickly',
+      features: ['500 XP instantly', 'Skip 2-3 weeks of grinding', 'Unlock Silver tier faster']
+    },
+    {
+      id: 'power',
+      name: 'Power Boost',
+      xp: 1200,
+      price: 19.99,
+      popular: true,
+      description: 'Most popular choice for serious ninjas',
+      features: ['1,200 XP instantly', 'Jump straight to Shadow Master', '20% bonus XP for 7 days', 'Exclusive badge']
+    },
+    {
+      id: 'ultimate',
+      name: 'Ultimate Boost',
+      xp: 2500,
+      price: 39.99,
+      popular: false,
+      description: 'Maximum power for elite ninjas',
+      features: ['2,500 XP instantly', 'Guaranteed Shadow Master rank', '50% bonus XP for 14 days', 'Exclusive avatar frame', 'Priority raffle entries']
+    }
+  ];
+
+  const handlePurchaseBoost = (boostId: string) => {
+    // In a real app, this would integrate with payment processing
+    const boost = boostPackages.find(b => b.id === boostId);
+    if (boost) {
+      alert(`🚀 XP Boost purchased! You gained ${boost.xp} XP instantly!\n\nIn a real app, this would process payment and update your XP.`);
+      setShowBoostModal(false);
+      setSelectedBoost(null);
+    }
+  };
 
   const xpActivities = [
     {
@@ -156,7 +198,7 @@ const XPZone = () => {
 
                 <div className="text-center">
                   <button className="bg-gradient-to-r from-neon-green to-neon-purple text-black font-black py-3 px-8 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider">
-                    🚀 BOOST XP
+                    <span onClick={() => setShowBoostModal(true)} className="cursor-pointer">🚀 BOOST XP</span>
                   </button>
                 </div>
               </div>
@@ -289,6 +331,137 @@ const XPZone = () => {
           </div>
         </div>
       </div>
+
+      {/* XP Boost Modal */}
+      {showBoostModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-gradient-to-br from-dark-900 via-black to-dark-800 rounded-2xl border border-neon-green/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowBoostModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Modal Header */}
+            <div className="p-8 border-b border-gray-800/50">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-neon-green to-neon-purple rounded-full flex items-center justify-center">
+                  <Zap className="text-black" size={32} />
+                </div>
+                <h2 className="text-3xl font-display font-black text-white mb-2 tracking-wider">
+                  XP <span className="text-neon-green">BOOST</span>
+                </h2>
+                <p className="text-gray-400 text-lg">
+                  Skip the grind. Level up instantly.
+                </p>
+              </div>
+            </div>
+
+            {/* Boost Packages */}
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {boostPackages.map((boost, index) => (
+                  <motion.div
+                    key={boost.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`relative bg-black/40 backdrop-blur-xl rounded-2xl p-6 border-2 transition-all duration-300 cursor-pointer ${
+                      boost.popular 
+                        ? 'border-neon-green bg-neon-green/5' 
+                        : 'border-gray-800/50 hover:border-neon-green/50'
+                    }`}
+                    onClick={() => setSelectedBoost(boost.id)}
+                  >
+                    {/* Popular Badge */}
+                    {boost.popular && (
+                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span className="bg-gradient-to-r from-neon-green to-neon-purple text-black text-xs font-bold px-3 py-1 rounded-full">
+                          MOST POPULAR
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="text-center mb-6">
+                      <h3 className="text-xl font-display font-black text-white mb-2 tracking-wider">
+                        {boost.name}
+                      </h3>
+                      <div className="text-4xl font-display font-black text-neon-green mb-1">
+                        {boost.xp.toLocaleString()}
+                      </div>
+                      <div className="text-gray-400 text-sm uppercase tracking-wider mb-3">XP POINTS</div>
+                      <div className="text-2xl font-bold text-white">
+                        ${boost.price}
+                      </div>
+                    </div>
+
+                    <p className="text-gray-400 text-sm text-center mb-6">
+                      {boost.description}
+                    </p>
+
+                    <div className="space-y-3 mb-6">
+                      {boost.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-neon-green rounded-full flex-shrink-0"></div>
+                          <span className="text-gray-300 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePurchaseBoost(boost.id);
+                      }}
+                      className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center space-x-2 ${
+                        boost.popular
+                          ? 'bg-gradient-to-r from-neon-green to-neon-purple text-black hover:shadow-lg hover:shadow-neon-green/25'
+                          : 'border-2 border-neon-green text-neon-green hover:bg-neon-green/10'
+                      }`}
+                    >
+                      <CreditCard size={20} />
+                      <span>PURCHASE BOOST</span>
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Additional Info */}
+              <div className="mt-8 bg-dark-800/50 rounded-xl p-6 border border-gray-800/50">
+                <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+                  <Zap className="mr-2 text-neon-green" size={20} />
+                  How XP Boost Works
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-400">
+                  <div>
+                    <h5 className="text-white font-semibold mb-2">Instant Delivery</h5>
+                    <p>XP is added to your account immediately after purchase. No waiting, no delays.</p>
+                  </div>
+                  <div>
+                    <h5 className="text-white font-semibold mb-2">Rank Benefits</h5>
+                    <p>Higher ranks unlock more raffle entries, exclusive drops, and VIP perks.</p>
+                  </div>
+                  <div>
+                    <h5 className="text-white font-semibold mb-2">Bonus Multipliers</h5>
+                    <p>Some packages include temporary XP multipliers for future activities.</p>
+                  </div>
+                  <div>
+                    <h5 className="text-white font-semibold mb-2">Secure Payment</h5>
+                    <p>All transactions are processed securely through our payment partners.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
