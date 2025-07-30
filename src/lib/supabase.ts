@@ -3,15 +3,28 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
 
-if (!supabaseUrl || !supabaseAnonKey) {
+// Validate environment variables
+if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.trim() === '' || supabaseAnonKey.trim() === '') {
   console.error('Supabase configuration error:', {
     hasUrl: !!supabaseUrl,
     hasKey: !!supabaseAnonKey,
-    urlFormat: supabaseUrl ? 'URL provided' : 'No URL'
+    urlFormat: supabaseUrl ? 'URL provided' : 'No URL',
+    urlValue: supabaseUrl || 'empty'
   })
   throw new Error(
     'Missing Supabase environment variables. ' +
     'Please check your .env file and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are properly set.'
+  )
+}
+
+// Validate URL format
+try {
+  new URL(supabaseUrl)
+} catch (error) {
+  console.error('Invalid Supabase URL format:', supabaseUrl)
+  throw new Error(
+    'Invalid Supabase URL format. ' +
+    'Please ensure VITE_SUPABASE_URL is a valid URL (e.g., https://your-project.supabase.co)'
   )
 }
 
