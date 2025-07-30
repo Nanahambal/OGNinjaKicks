@@ -58,54 +58,69 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    console.log('SignIn called with:', email, password); // Debug log
+    console.log('SignIn called with:', { email, password });
     
-    // Check for demo credentials FIRST
-    if (email === 'ninja@dojo.com' && password === 'shadow123') {
-      console.log('Demo credentials matched!'); // Debug log
+    setLoading(true);
+    
+    try {
+      // Check for demo credentials FIRST
+      if (email === 'ninja@dojo.com' && password === 'shadow123') {
+        console.log('Demo credentials matched!');
+        
+        const mockUser: User = {
+          id: 'demo-user-123',
+          name: 'Shadow Walker',
+          email: email,
+          memberSince: '2024-01-15',
+          ninjaRank: 'Silver',
+          xp: 1250,
+          raffleEntries: 5,
+          totalSpent: 850,
+          avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
+        };
+        
+        setUser(mockUser);
+        setSession({ user: mockUser });
+        setIsAuthenticated(true);
+        console.log('Authentication state updated:', { user: mockUser, isAuthenticated: true });
+        setLoading(false);
+        return {};
+      }
       
-      const mockUser: User = {
-        id: 'demo-user-123',
-        name: 'Shadow Walker',
-        email: email,
-        memberSince: '2024-01-15',
-        ninjaRank: 'Silver',
-        xp: 1250,
-        raffleEntries: 5,
-        totalSpent: 850,
-        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
-      };
+      // For any other valid email/password combination
+      if (email && password && email.includes('@') && password.length >= 3) {
+        console.log('Using fallback credentials');
+        
+        const mockUser: User = {
+          id: 'demo-user-456',
+          name: 'New Ninja',
+          email: email,
+          memberSince: new Date().toISOString().split('T')[0],
+          ninjaRank: 'Bronze',
+          xp: 0,
+          raffleEntries: 3,
+          totalSpent: 0,
+          avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
+        };
+        
+        setUser(mockUser);
+        setSession({ user: mockUser });
+        setIsAuthenticated(true);
+        console.log('Authentication state updated:', { user: mockUser, isAuthenticated: true });
+        setLoading(false);
+        return {};
+      }
       
-      setUser(mockUser);
-      setSession({ user: mockUser });
-      setIsAuthenticated(true);
-      console.log('User set, authenticated:', true); // Debug log
-      return {};
+      // Return error for invalid credentials
+      console.log('Invalid credentials provided');
+      setLoading(false);
+      return { error: 'Invalid credentials. Use ninja@dojo.com / shadow123 for demo access.' };
+      
+    } catch (error) {
+      console.error('SignIn error:', error);
+      setLoading(false);
+      return { error: 'Authentication failed' };
     }
-    
-    // For any other valid email/password
-    if (email && password && email.includes('@') && password.length >= 3) {
-      const mockUser: User = {
-        id: 'demo-user-456',
-        name: 'New Ninja',
-        email: email,
-        memberSince: new Date().toISOString().split('T')[0],
-        ninjaRank: 'Bronze',
-        xp: 0,
-        raffleEntries: 3,
-        totalSpent: 0,
-        avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
-      };
-      
-      setUser(mockUser);
-      setSession({ user: mockUser });
-      setIsAuthenticated(true);
-      return {};
-    }
-    
-    // Return error for invalid credentials
-    console.log('Invalid credentials'); // Debug log
-    return { error: 'Invalid credentials. Use ninja@dojo.com / shadow123 for demo access.' };
   };
 
   const signOut = async () => {
