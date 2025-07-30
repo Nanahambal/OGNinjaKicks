@@ -58,9 +58,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    // Demo mode - check for specific demo credentials first
+    console.log('SignIn called with:', email, password); // Debug log
+    
+    // Check for demo credentials FIRST
     if (email === 'ninja@dojo.com' && password === 'shadow123') {
-      // Demo credentials - show as experienced ninja
+      console.log('Demo credentials matched!'); // Debug log
+      
       const mockUser: User = {
         id: 'demo-user-123',
         name: 'Shadow Walker',
@@ -76,12 +79,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(mockUser);
       setSession({ user: mockUser });
       setIsAuthenticated(true);
+      console.log('User set, authenticated:', true); // Debug log
       return {};
     }
     
-    // Accept any other valid email/password combination
+    // For any other valid email/password
     if (email && password && email.includes('@') && password.length >= 3) {
-      // Any other credentials - show as new ninja
       const mockUser: User = {
         id: 'demo-user-456',
         name: 'New Ninja',
@@ -101,6 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     // Return error for invalid credentials
+    console.log('Invalid credentials'); // Debug log
     return { error: 'Invalid credentials. Use ninja@dojo.com / shadow123 for demo access.' };
   };
 
