@@ -58,8 +58,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    // Demo mode - check for mock credentials
+    // Demo mode - accept any credentials for testing, but show special user for demo credentials
     if (email === 'ninja@dojo.com' && password === 'shadow123') {
+      // Demo credentials - show as experienced ninja
       const mockUser: User = {
         id: 'demo-user-123',
         name: 'Shadow Walker',
@@ -76,8 +77,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession({ user: mockUser });
       setIsAuthenticated(true);
       return {};
+    } else if (email && password) {
+      // Any other credentials - show as new ninja
+      const mockUser: User = {
+        id: 'demo-user-456',
+        name: 'New Ninja',
+        email: email,
+        memberSince: new Date().toISOString().split('T')[0],
+        ninjaRank: 'Bronze',
+        xp: 0,
+        raffleEntries: 3,
+        totalSpent: 0,
+        avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
+      };
+      
+      setUser(mockUser);
+      setSession({ user: mockUser });
+      setIsAuthenticated(true);
+      return {};
     } else {
-      return { error: 'Invalid credentials. Use the demo access code and dojo key shown above.' };
+      return { error: 'Please enter both email and password.' };
     }
   };
 
