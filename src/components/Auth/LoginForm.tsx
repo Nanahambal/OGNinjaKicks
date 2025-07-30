@@ -174,6 +174,33 @@ const LoginForm = () => {
                   Join our exclusive ninja community with premium membership starting at <span className="text-neon-green font-bold">₹24.99/month</span>. 
                   Payment required to complete registration.
                 </p>
+                
+                {/* Membership Benefits */}
+                <div className="mt-4 space-y-2">
+                  <h4 className="text-white font-bold text-sm uppercase tracking-wider">What You Get:</h4>
+                  <div className="grid grid-cols-1 gap-2 text-xs text-gray-300">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-1.5 h-1.5 bg-neon-green rounded-full"></div>
+                      <span>Exclusive sneaker drops before anyone else</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-1.5 h-1.5 bg-neon-green rounded-full"></div>
+                      <span>Weekly raffle entries for rare releases</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-1.5 h-1.5 bg-neon-green rounded-full"></div>
+                      <span>Ninja XP system with exclusive rewards</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-1.5 h-1.5 bg-neon-green rounded-full"></div>
+                      <span>VIP customer support & priority access</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-1.5 h-1.5 bg-neon-green rounded-full"></div>
+                      <span>Community access & member-only events</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

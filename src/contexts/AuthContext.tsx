@@ -27,13 +27,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Demo mode - create a mock user for preview
+    // Demo mode - start unauthenticated to show login page
+    setUser(null);
+    setSession(null);
+    setIsAuthenticated(false);
+    setLoading(false);
+  }, []);
+
+  const signUp = async (email: string, password: string, name: string) => {
+    // Demo mode - simulate successful signup and login
+    const mockUser: User = {
+      id: 'demo-user-123',
+      name: name,
+      email: email,
+      memberSince: new Date().toISOString().split('T')[0],
+      ninjaRank: 'Bronze',
+      xp: 0,
+      raffleEntries: 3,
+      totalSpent: 0,
+      avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
+    };
+    
+    setUser(mockUser);
+    setSession({ user: mockUser });
+    setIsAuthenticated(true);
+    return {};
+  };
+
+  const signIn = async (email: string, password: string) => {
+    // Demo mode - simulate successful login
     const mockUser: User = {
       id: 'demo-user-123',
       name: 'Shadow Walker',
-      email: 'demo@ogninja.com',
+      email: email,
       memberSince: '2024-01-15',
       ninjaRank: 'Silver',
       xp: 1250,
@@ -44,16 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     setUser(mockUser);
     setSession({ user: mockUser });
-    setLoading(false);
-  }, []);
-
-  const signUp = async (email: string, password: string, name: string) => {
-    // Demo mode - simulate successful signup
-    return {};
-  };
-
-  const signIn = async (email: string, password: string) => {
-    // Demo mode - simulate successful login
+    setIsAuthenticated(true);
     return {};
   };
 
@@ -61,6 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Demo mode - simulate logout
     setUser(null);
     setSession(null);
+    setIsAuthenticated(false);
   };
 
   const resetPassword = async (email: string) => {
@@ -78,7 +99,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const value = {
     user,
     session,
-    isAuthenticated: true, // Always authenticated in demo mode
+    isAuthenticated,
     loading,
     signUp,
     signIn,
