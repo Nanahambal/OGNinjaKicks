@@ -90,7 +90,7 @@ const Navbar = () => {
               />
             </div>
             <button
-              onClick={logout}
+              onClick={signOut}
               className="text-gray-400 hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-dark-800/50"
             >
               <LogOut size={20} />

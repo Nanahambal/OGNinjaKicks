@@ -1,34 +1,36 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+// Demo mode configuration - no real Supabase connection needed
+const DEMO_MODE = true;
 
-// Validate environment variables
-if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.trim() === '' || supabaseAnonKey.trim() === '') {
-  console.error('Supabase configuration error:', {
-    hasUrl: !!supabaseUrl,
-    hasKey: !!supabaseAnonKey,
-    urlFormat: supabaseUrl ? 'URL provided' : 'No URL',
-    urlValue: supabaseUrl || 'empty'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://demo.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'demo-key'
+
+// Create a mock client for demo purposes
+const createMockClient = () => ({
+  auth: {
+    getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+    onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+    signUp: () => Promise.resolve({ data: { user: null }, error: null }),
+    signInWithPassword: () => Promise.resolve({ data: { user: null }, error: null }),
+    signOut: () => Promise.resolve({ error: null }),
+    resetPasswordForEmail: () => Promise.resolve({ error: null }),
+    updateUser: () => Promise.resolve({ error: null })
+  },
+  from: () => ({
+    select: () => ({
+      eq: () => ({
+        single: () => Promise.resolve({ data: null, error: null })
+      })
+    }),
+    insert: () => Promise.resolve({ error: null }),
+    update: () => ({
+      eq: () => Promise.resolve({ error: null })
+    })
   })
-  throw new Error(
-    'Missing Supabase environment variables. ' +
-    'Please check your .env file and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are properly set.'
-  )
-}
+});
 
-// Validate URL format
-try {
-  new URL(supabaseUrl)
-} catch (error) {
-  console.error('Invalid Supabase URL format:', supabaseUrl)
-  throw new Error(
-    'Invalid Supabase URL format. ' +
-    'Please ensure VITE_SUPABASE_URL is a valid URL (e.g., https://your-project.supabase.co)'
-  )
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = DEMO_MODE ? createMockClient() : createClient(supabaseUrl, supabaseAnonKey);
 
 // Database types
 export interface Database {
