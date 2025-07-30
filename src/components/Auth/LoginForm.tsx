@@ -157,26 +157,6 @@ const LoginForm = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-neon-green/5 to-neon-purple/5 rounded-2xl"></div>
           
           <div className="relative z-10 space-y-6">
-            {/* Demo Credentials Notice */}
-            <div className="bg-gradient-to-r from-neon-green/20 to-neon-purple/20 border border-neon-green/30 rounded-xl p-4">
-              <div className="flex items-center space-x-2 mb-2">
-                <Shield className="text-neon-green" size={16} />
-                <span className="text-neon-green font-bold text-sm uppercase tracking-wider">Demo Access</span>
-              </div>
-              <p className="text-gray-300 text-sm mb-3">
-                Use these credentials to preview the ninja dojo:
-              </p>
-              <div className="bg-black/50 rounded-xl p-3 space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-400 text-sm">Access Code:</span>
-                  <code className="text-neon-green font-mono text-sm">ninja@dojo.com</code>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-400 text-sm">Dojo Key:</span>
-                  <code className="text-neon-purple font-mono text-sm">shadow123</code>
-                </div>
-              </div>
-            </div>
 
             {/* Error/Success Messages */}
             {error && (
