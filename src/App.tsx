@@ -11,7 +11,6 @@ import Intel from './components/Intel/Intel';
 import XPZone from './components/XPZone/XPZone';
 import HallOfFame from './components/HallOfFame/HallOfFame';
 import Profile from './components/Profile/Profile';
-import AdminNotice from './components/Admin/AdminNotice';
 
 // Placeholder components for other pages
 const Help = () => (
@@ -67,7 +66,6 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <AdminNotice />
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/reset-password" element={<ResetPassword />} />
