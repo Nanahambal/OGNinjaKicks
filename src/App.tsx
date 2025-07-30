@@ -113,49 +113,49 @@ const App = () => {
           <Route path="/demo-login" element={<DemoLoginPage />} />
           <Route path="/demo-dashboard" element={<DemoDashboardPage />} />
           
-          {/* Regular Routes */}
+          {/* Regular Routes - also work as public demo */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/" element={<Navigate to="/demo-dashboard" />} />
+          <Route path="/" element={<Navigate to="/demo-dashboard" replace />} />
           <Route path="/dashboard" element={
-            <ProtectedRoute>
+            <Layout>
               <Dashboard />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/shop" element={
-            <ProtectedRoute>
+            <Layout>
               <Shop />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/raffle" element={
-            <ProtectedRoute>
+            <Layout>
               <Raffle />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/news" element={
-            <ProtectedRoute>
+            <Layout>
               <Intel />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/loyalty" element={
-            <ProtectedRoute>
+            <Layout>
               <XPZone />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/members" element={
-            <ProtectedRoute>
+            <Layout>
               <HallOfFame />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/account" element={
-            <ProtectedRoute>
+            <Layout>
               <Profile />
-            </ProtectedRoute>
+            </Layout>
           } />
           <Route path="/help" element={
-            <ProtectedRoute>
+            <Layout>
               <Help />
-            </ProtectedRoute>
+            </Layout>
           } />
         </Routes>
       </Router>

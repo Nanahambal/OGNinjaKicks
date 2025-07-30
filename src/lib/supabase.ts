@@ -1,12 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Demo mode configuration - no real Supabase connection needed
+// Force demo mode for public access - no Supabase connection needed
 const DEMO_MODE = true;
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://demo.supabase.co'
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'demo-key'
 
-// Create a mock client for demo purposes
+// Create a mock client that never tries to connect to real Supabase
 const createMockClient = () => ({
   auth: {
     getSession: () => Promise.resolve({ data: { session: null }, error: null }),
@@ -30,7 +30,8 @@ const createMockClient = () => ({
   })
 });
 
-export const supabase = DEMO_MODE ? createMockClient() : createClient(supabaseUrl, supabaseAnonKey);
+// Always use mock client for public demo
+export const supabase = createMockClient();
 
 // Database types
 export interface Database {

@@ -30,11 +30,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if we're on the demo dashboard route for auto-login
+    // Auto-login logic for demo routes
     const currentPath = window.location.pathname;
     
-    if (currentPath === '/demo-dashboard' || currentPath === '/') {
-      // Auto-login for demo dashboard
+    if (currentPath === '/demo-dashboard' || currentPath === '/' || currentPath === '/dashboard') {
+      // Auto-login for demo dashboard and main routes
       const mockUser: User = {
         id: 'demo-user-123',
         name: 'Shadow Walker',
@@ -51,14 +51,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession({ user: mockUser });
       setIsAuthenticated(true);
     } else {
-      // Don't auto-login for other routes (like demo-login)
+      // Don't auto-login for login routes
       setUser(null);
       setSession(null);
       setIsAuthenticated(false);
     }
     
     setLoading(false);
-  }, [window.location.pathname]);
 
   const signUp = async (email: string, password: string, name: string) => {
     // Demo mode - simulate successful signup and login
