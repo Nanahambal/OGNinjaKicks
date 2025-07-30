@@ -30,10 +30,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Demo mode - start unauthenticated to show login page
-    setUser(null);
-    setSession(null);
-    setIsAuthenticated(false);
+    // Demo mode - automatically log in as demo user
+    const mockUser: User = {
+      id: 'demo-user-123',
+      name: 'Shadow Walker',
+      email: 'ninja@dojo.com',
+      memberSince: '2024-01-15',
+      ninjaRank: 'Silver',
+      xp: 1250,
+      raffleEntries: 5,
+      totalSpent: 850,
+      avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
+    };
+    
+    setUser(mockUser);
+    setSession({ user: mockUser });
+    setIsAuthenticated(true);
     setLoading(false);
   }, []);
 

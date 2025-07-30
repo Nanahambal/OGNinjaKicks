@@ -69,7 +69,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
