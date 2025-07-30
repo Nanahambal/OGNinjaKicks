@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Filter, Grid, List, Star, Clock, ShoppingCart } from 'lucide-react';
 
 const Shop = () => {
-  const [activeTab, setActiveTab] = useState<'Early Access' | 'Exclusive Drops' | 'Archive'>('Early Access');
+  const [activeTab, setActiveTab] = useState<'Pre-loved Sneakers' | 'Deadstock' | 'Posters' | 'Accessories'>('Pre-loved Sneakers');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const sneakers = [
@@ -14,7 +14,7 @@ const Shop = () => {
       price: 650,
       originalPrice: 750,
       image: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
-      category: 'Early Access',
+      category: 'Deadstock',
       sizes: ['8', '8.5', '9', '9.5', '10', '10.5', '11'],
       timeLeft: '2 days',
       rating: 4.9,
@@ -26,7 +26,7 @@ const Shop = () => {
       brand: 'Nike',
       price: 420,
       image: 'https://images.pexels.com/photos/1240892/pexels-photo-1240892.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
-      category: 'Exclusive Drops',
+      category: 'Pre-loved Sneakers',
       sizes: ['7', '8', '9', '10', '11', '12'],
       timeLeft: '5 hours',
       rating: 4.8,
@@ -38,7 +38,7 @@ const Shop = () => {
       brand: 'Adidas',
       price: 380,
       image: 'https://images.pexels.com/photos/1639729/pexels-photo-1639729.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
-      category: 'Archive',
+      category: 'Pre-loved Sneakers',
       sizes: ['8.5', '9', '9.5', '10', '10.5', '11', '11.5'],
       rating: 4.7,
       isExclusive: false
@@ -49,20 +49,43 @@ const Shop = () => {
       brand: 'Jordan',
       price: 1200,
       image: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
-      category: 'Early Access',
+      category: 'Deadstock',
       sizes: ['9', '9.5', '10', '10.5'],
       timeLeft: '12 hours',
       rating: 5.0,
       isExclusive: true
+    },
+    {
+      id: 5,
+      name: 'OG Ninja Kicks Poster Set',
+      brand: 'OG Ninja',
+      price: 45,
+      image: 'https://images.pexels.com/photos/1639729/pexels-photo-1639729.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
+      category: 'Posters',
+      sizes: ['18x24', '24x36'],
+      rating: 4.6,
+      isExclusive: false
+    },
+    {
+      id: 6,
+      name: 'Ninja Cleaning Kit',
+      brand: 'OG Ninja',
+      price: 35,
+      image: 'https://images.pexels.com/photos/1240892/pexels-photo-1240892.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
+      category: 'Accessories',
+      sizes: ['One Size'],
+      rating: 4.8,
+      isExclusive: false
     }
   ];
 
   const filteredSneakers = sneakers.filter(sneaker => sneaker.category === activeTab);
 
   const tabs = [
-    { id: 'Early Access', label: 'Early Access', count: 2 },
-    { id: 'Exclusive Drops', label: 'Exclusive Drops', count: 1 },
-    { id: 'Archive', label: 'Archive', count: 1 }
+    { id: 'Pre-loved Sneakers', label: 'Pre-loved Sneakers', count: 2 },
+    { id: 'Deadstock', label: 'Deadstock', count: 2 },
+    { id: 'Posters', label: 'Posters', count: 1 },
+    { id: 'Accessories', label: 'Accessories', count: 1 }
   ];
 
   return (
