@@ -3,17 +3,15 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
 
-if (!supabaseUrl || !supabaseAnonKey || !supabaseUrl.startsWith('https://')) {
+if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Supabase configuration error:', {
     hasUrl: !!supabaseUrl,
     hasKey: !!supabaseAnonKey,
-    urlFormat: supabaseUrl ? 'URL provided' : 'No URL',
-    urlValid: supabaseUrl.startsWith('https://')
+    urlFormat: supabaseUrl ? 'URL provided' : 'No URL'
   })
   throw new Error(
-    'Missing or invalid Supabase environment variables. ' +
-    'Please check your .env file and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are properly set. ' +
-    'The URL should start with "https://" and end with ".supabase.co".'
+    'Missing Supabase environment variables. ' +
+    'Please check your .env file and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are properly set.'
   )
 }
 
