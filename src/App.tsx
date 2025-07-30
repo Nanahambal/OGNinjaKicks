@@ -38,6 +38,48 @@ const Help = () => (
   </div>
 );
 
+// Demo Navigation Component
+const DemoNavigation = () => (
+  <div className="fixed top-4 left-4 z-50 bg-black/80 backdrop-blur-xl rounded-xl p-4 border border-neon-green/30">
+    <h3 className="text-neon-green font-bold text-sm mb-3 uppercase tracking-wider">Demo Navigation</h3>
+    <div className="space-y-2">
+      <a
+        href="/demo-login"
+        className="block bg-neon-purple/20 text-neon-purple px-3 py-2 rounded-lg text-sm font-semibold hover:bg-neon-purple/30 transition-colors"
+      >
+        📝 Pre-Login Page
+      </a>
+      <a
+        href="/demo-dashboard"
+        className="block bg-neon-green/20 text-neon-green px-3 py-2 rounded-lg text-sm font-semibold hover:bg-neon-green/30 transition-colors"
+      >
+        🏠 Logged-In Dashboard
+      </a>
+    </div>
+  </div>
+);
+
+// Demo Login Page (shows login form without auto-login)
+const DemoLoginPage = () => {
+  return (
+    <div>
+      <DemoNavigation />
+      <LoginForm />
+    </div>
+  );
+};
+
+// Demo Dashboard Page (auto-logged in experience)
+const DemoDashboardPage = () => {
+  return (
+    <div>
+      <DemoNavigation />
+      <Layout>
+        <Dashboard />
+      </Layout>
+    </div>
+  );
+};
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
@@ -67,9 +109,14 @@ const App = () => {
     <AuthProvider>
       <Router>
         <Routes>
+          {/* Demo Routes */}
+          <Route path="/demo-login" element={<DemoLoginPage />} />
+          <Route path="/demo-dashboard" element={<DemoDashboardPage />} />
+          
+          {/* Regular Routes */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/" element={<Navigate to="/demo-dashboard" />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />

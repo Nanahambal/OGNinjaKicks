@@ -30,24 +30,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Demo mode - automatically log in as demo user
-    const mockUser: User = {
-      id: 'demo-user-123',
-      name: 'Shadow Walker',
-      email: 'ninja@dojo.com',
-      memberSince: '2024-01-15',
-      ninjaRank: 'Silver',
-      xp: 1250,
-      raffleEntries: 5,
-      totalSpent: 850,
-      avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
-    };
+    // Check if we're on the demo dashboard route for auto-login
+    const currentPath = window.location.pathname;
     
-    setUser(mockUser);
-    setSession({ user: mockUser });
-    setIsAuthenticated(true);
+    if (currentPath === '/demo-dashboard' || currentPath === '/') {
+      // Auto-login for demo dashboard
+      const mockUser: User = {
+        id: 'demo-user-123',
+        name: 'Shadow Walker',
+        email: 'ninja@dojo.com',
+        memberSince: '2024-01-15',
+        ninjaRank: 'Silver',
+        xp: 1250,
+        raffleEntries: 5,
+        totalSpent: 850,
+        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop'
+      };
+      
+      setUser(mockUser);
+      setSession({ user: mockUser });
+      setIsAuthenticated(true);
+    } else {
+      // Don't auto-login for other routes (like demo-login)
+      setUser(null);
+      setSession(null);
+      setIsAuthenticated(false);
+    }
+    
     setLoading(false);
-  }, []);
+  }, [window.location.pathname]);
 
   const signUp = async (email: string, password: string, name: string) => {
     // Demo mode - simulate successful signup and login
