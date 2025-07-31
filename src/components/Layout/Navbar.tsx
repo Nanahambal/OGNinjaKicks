@@ -15,7 +15,6 @@ const Navbar = () => {
     { path: '/shop', icon: ShoppingBag, label: 'Vault' },
     { path: '/raffle', icon: Ticket, label: 'Raffle' },
     { path: '/news', icon: Newspaper, label: 'Intel' },
-    { path: '/cart', icon: ShoppingCart, label: 'Cart' },
     { path: '/loyalty', icon: Trophy, label: 'XP Zone' },
     { path: '/members', icon: Users, label: 'Hall' },
     { path: '/account', icon: User, label: 'Profile' },
@@ -83,6 +82,20 @@ const Navbar = () => {
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
+            {/* Cart Icon */}
+            <Link
+              to="/cart"
+              className="relative p-2 text-gray-300 hover:text-white transition-colors rounded-lg hover:bg-dark-800/50 group"
+            >
+              <ShoppingCart size={24} />
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-neon-green text-black text-xs font-bold px-2 py-1 rounded-full min-w-[20px] h-5 flex items-center justify-center animate-pulse">
+                  {itemCount}
+                </span>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-r from-neon-green/10 to-neon-purple/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </Link>
+
             <div className="text-right hidden md:block">
               <p className="text-white font-bold text-sm uppercase tracking-wider">{user?.name}</p>
               <p className="text-neon-green text-xs font-semibold uppercase tracking-widest">
@@ -109,8 +122,8 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       <div className="lg:hidden bg-dark-800/80 backdrop-blur-xl border-t border-gray-800/50">
-        <div className="flex overflow-x-auto">
-          {navItems.slice(0, 6).map((item) => {
+        <div className="flex overflow-x-auto relative">
+          {navItems.slice(0, 5).map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             
@@ -124,16 +137,29 @@ const Navbar = () => {
               >
                 <div className="relative">
                   <Icon size={20} />
-                  {item.path === '/cart' && itemCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-neon-green text-black text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[18px] h-4 flex items-center justify-center">
-                      {itemCount}
-                    </span>
-                  )}
                 </div>
                 <span className="mt-1 truncate uppercase tracking-wider">{item.label}</span>
               </Link>
             );
           })}
+          
+          {/* Mobile Cart Icon */}
+          <Link
+            to="/cart"
+            className={`flex flex-col items-center py-4 px-4 min-w-0 flex-1 text-xs font-semibold transition-colors ${
+              location.pathname === '/cart' ? 'text-neon-green' : 'text-gray-400'
+            }`}
+          >
+            <div className="relative">
+              <ShoppingCart size={20} />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-neon-green text-black text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[18px] h-4 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
+            </div>
+            <span className="mt-1 truncate uppercase tracking-wider">CART</span>
+          </Link>
         </div>
       </div>
     </nav>
