@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Filter, Grid, List, Star, Clock, ShoppingCart } from 'lucide-react';
+import { useCart } from '../../contexts/CartContext';
 
 const Shop = () => {
+  const { addToCart, isInCart } = useCart();
   const [activeTab, setActiveTab] = useState<'Pre-loved Sneakers' | 'Deadstock' | 'Posters' | 'Accessories'>('Pre-loved Sneakers');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
 
   const sneakers = [
     {
@@ -80,6 +83,36 @@ const Shop = () => {
   ];
 
   const filteredSneakers = sneakers.filter(sneaker => sneaker.category === activeTab);
+
+  const handleAddToCart = (sneaker: any) => {
+    const selectedSize = selectedSizes[sneaker.id];
+    if (!selectedSize) {
+      alert('Please select a size first!');
+      return;
+    }
+
+    addToCart({
+      id: sneaker.id.toString(),
+      name: sneaker.name,
+      brand: sneaker.brand,
+      price: sneaker.price,
+      originalPrice: sneaker.originalPrice,
+      image: sneaker.image,
+      category: sneaker.category,
+      selectedSize: selectedSize,
+      isExclusive: sneaker.isExclusive
+    });
+
+    // Show success message
+    alert(`🎉 Added to cart!\n\n${sneaker.name}\nSize: ${selectedSize}\nPrice: ₹${sneaker.price}`);
+  };
+
+  const handleSizeSelect = (sneakerId: number, size: string) => {
+    setSelectedSizes(prev => ({
+      ...prev,
+      [sneakerId]: size
+    }));
+  };
 
   const tabs = [
     { id: 'Pre-loved Sneakers', label: 'Pre-loved Sneakers', count: 2 },
@@ -199,12 +232,17 @@ const Shop = () => {
                 <p className="text-gray-400 text-sm mb-2">Available sizes:</p>
                 <div className="flex flex-wrap gap-2">
                   {sneaker.sizes.slice(0, 4).map((size) => (
-                    <span
+                    <button
                       key={size}
-                      className="bg-dark-700 text-white text-xs px-2 py-1 rounded"
+                      onClick={() => handleSizeSelect(sneaker.id, size)}
+                      className={`text-xs px-2 py-1 rounded transition-colors ${
+                        selectedSizes[sneaker.id] === size
+                          ? 'bg-neon-green text-black font-bold'
+                          : 'bg-dark-700 text-white hover:bg-dark-600'
+                      }`}
                     >
                       {size}
-                    </span>
+                    </button>
                   ))}
                   {sneaker.sizes.length > 4 && (
                     <span className="text-gray-400 text-xs">+{sneaker.sizes.length - 4} more</span>
@@ -213,12 +251,22 @@ const Shop = () => {
               </div>
 
               <motion.button
+                onClick={() => handleAddToCart(sneaker)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 rounded-lg hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 flex items-center justify-center space-x-2"
+                className={`w-full font-bold py-3 rounded-lg hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 ${
+                  selectedSizes[sneaker.id] && isInCart(sneaker.id.toString(), selectedSizes[sneaker.id])
+                    ? 'bg-dark-700 text-neon-green border-2 border-neon-green'
+                    : 'bg-gradient-to-r from-neon-green to-neon-purple text-black hover:shadow-neon-green/25'
+                }`}
               >
                 <ShoppingCart size={20} />
-                <span>Add to Cart</span>
+                <span>
+                  {selectedSizes[sneaker.id] && isInCart(sneaker.id.toString(), selectedSizes[sneaker.id])
+                    ? 'In Cart'
+                    : 'Add to Cart'
+                  }
+                </span>
               </motion.button>
             </div>
           </motion.div>

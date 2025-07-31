@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
 import Layout from './components/Layout/Layout';
 import LoginForm from './components/Auth/LoginForm';
 import ResetPassword from './components/Auth/ResetPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Shop from './components/Shop/Shop';
+import Cart from './components/Cart/Cart';
 import Raffle from './components/Raffle/Raffle';
 import Intel from './components/Intel/Intel';
 import XPZone from './components/XPZone/XPZone';
@@ -107,58 +109,65 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 const App = () => {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Demo Routes */}
-          <Route path="/demo-login" element={<DemoLoginPage />} />
-          <Route path="/demo-dashboard" element={<DemoDashboardPage />} />
-          
-          {/* Regular Routes - also work as public demo */}
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/" element={<Navigate to="/demo-dashboard" replace />} />
-          <Route path="/dashboard" element={
-            <Layout>
-              <Dashboard />
-            </Layout>
-          } />
-          <Route path="/shop" element={
-            <Layout>
-              <Shop />
-            </Layout>
-          } />
-          <Route path="/raffle" element={
-            <Layout>
-              <Raffle />
-            </Layout>
-          } />
-          <Route path="/news" element={
-            <Layout>
-              <Intel />
-            </Layout>
-          } />
-          <Route path="/loyalty" element={
-            <Layout>
-              <XPZone />
-            </Layout>
-          } />
-          <Route path="/members" element={
-            <Layout>
-              <HallOfFame />
-            </Layout>
-          } />
-          <Route path="/account" element={
-            <Layout>
-              <Profile />
-            </Layout>
-          } />
-          <Route path="/help" element={
-            <Layout>
-              <Help />
-            </Layout>
-          } />
-        </Routes>
-      </Router>
+      <CartProvider>
+        <Router>
+          <Routes>
+            {/* Demo Routes */}
+            <Route path="/demo-login" element={<DemoLoginPage />} />
+            <Route path="/demo-dashboard" element={<DemoDashboardPage />} />
+            
+            {/* Regular Routes - also work as public demo */}
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/" element={<Navigate to="/demo-dashboard" replace />} />
+            <Route path="/dashboard" element={
+              <Layout>
+                <Dashboard />
+              </Layout>
+            } />
+            <Route path="/shop" element={
+              <Layout>
+                <Shop />
+              </Layout>
+            } />
+            <Route path="/cart" element={
+              <Layout>
+                <Cart />
+              </Layout>
+            } />
+            <Route path="/raffle" element={
+              <Layout>
+                <Raffle />
+              </Layout>
+            } />
+            <Route path="/news" element={
+              <Layout>
+                <Intel />
+              </Layout>
+            } />
+            <Route path="/loyalty" element={
+              <Layout>
+                <XPZone />
+              </Layout>
+            } />
+            <Route path="/members" element={
+              <Layout>
+                <HallOfFame />
+              </Layout>
+            } />
+            <Route path="/account" element={
+              <Layout>
+                <Profile />
+              </Layout>
+            } />
+            <Route path="/help" element={
+              <Layout>
+                <Help />
+              </Layout>
+            } />
+          </Routes>
+        </Router>
+      </CartProvider>
     </AuthProvider>
   );
 };

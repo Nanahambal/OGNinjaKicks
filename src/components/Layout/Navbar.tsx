@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, ShoppingBag, Ticket, Newspaper, Trophy, Users, User, HelpCircle, LogOut } from 'lucide-react';
+import { Home, ShoppingBag, Ticket, Newspaper, Trophy, Users, User, HelpCircle, LogOut, ShoppingCart } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useCart } from '../../contexts/CartContext';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const { itemCount } = useCart();
   const location = useLocation();
 
   const navItems = [
@@ -13,6 +15,7 @@ const Navbar = () => {
     { path: '/shop', icon: ShoppingBag, label: 'Vault' },
     { path: '/raffle', icon: Ticket, label: 'Raffle' },
     { path: '/news', icon: Newspaper, label: 'Intel' },
+    { path: '/cart', icon: ShoppingCart, label: 'Cart' },
     { path: '/loyalty', icon: Trophy, label: 'XP Zone' },
     { path: '/members', icon: Users, label: 'Hall' },
     { path: '/account', icon: User, label: 'Profile' },
@@ -58,6 +61,11 @@ const Navbar = () => {
                   <div className="flex items-center space-x-2">
                     <Icon size={16} />
                     <span className="uppercase tracking-wider">{item.label}</span>
+                    {item.path === '/cart' && itemCount > 0 && (
+                      <span className="bg-neon-green text-black text-xs font-bold px-2 py-1 rounded-full min-w-[20px] h-5 flex items-center justify-center">
+                        {itemCount}
+                      </span>
+                    )}
                   </div>
                   {isActive && (
                     <motion.div
@@ -114,7 +122,14 @@ const Navbar = () => {
                   isActive ? 'text-neon-green' : 'text-gray-400'
                 }`}
               >
-                <Icon size={20} />
+                <div className="relative">
+                  <Icon size={20} />
+                  {item.path === '/cart' && itemCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-neon-green text-black text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[18px] h-4 flex items-center justify-center">
+                      {itemCount}
+                    </span>
+                  )}
+                </div>
                 <span className="mt-1 truncate uppercase tracking-wider">{item.label}</span>
               </Link>
             );
