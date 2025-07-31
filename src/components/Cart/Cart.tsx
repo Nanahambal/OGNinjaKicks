@@ -67,7 +67,7 @@ const Cart = () => {
             </p>
             <Link
               to="/shop"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-4 px-8 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-4 px-8 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider cursor-pointer"
             >
               <ArrowLeft size={20} />
               <span>Browse Vault</span>

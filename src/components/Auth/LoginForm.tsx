@@ -334,15 +334,15 @@ const LoginForm = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
         >
-          <div className="group">
+          <div className="group cursor-pointer" onClick={() => window.location.href = '/shop'}>
             <div className="text-neon-green font-black text-xl mb-1 group-hover:scale-110 transition-transform">EXCLUSIVE</div>
             <div className="text-gray-400 text-sm font-medium">Jordan Drops</div>
           </div>
-          <div className="group">
+          <div className="group cursor-pointer" onClick={() => window.location.href = '/raffle'}>
             <div className="text-neon-purple font-black text-xl mb-1 group-hover:scale-110 transition-transform">WEEKLY</div>
             <div className="text-gray-400 text-sm font-medium">Raffles</div>
           </div>
-          <div className="group">
+          <div className="group cursor-pointer" onClick={() => window.location.href = '/loyalty'}>
             <div className="text-neon-green font-black text-xl mb-1 group-hover:scale-110 transition-transform">LOYALTY</div>
             <div className="text-gray-400 text-sm font-medium">XP System</div>
           </div>

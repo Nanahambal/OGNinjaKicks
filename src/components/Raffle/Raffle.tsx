@@ -168,6 +168,7 @@ const Raffle = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => alert('🎟️ Raffle Entry Submitted!\n\nYou have entered the raffle for ' + currentRaffle.sneaker.name + '!\n\nGood luck, ninja! 🥷')}
                     className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-4 rounded-lg hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 flex items-center justify-center space-x-2"
                   >
                     <Ticket size={20} />

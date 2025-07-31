@@ -33,7 +33,9 @@ const Help = () => (
       <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-8 border border-gray-800/50 text-center">
         <p className="text-gray-400 text-lg">Support system and FAQs coming soon...</p>
         <button className="mt-6 bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 px-8 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider">
-          🥷 SUMMON A NINJA
+          <span onClick={() => alert('🥷 Ninja Support Summoned!\n\nA support ninja will contact you within 24 hours.\n\nFor immediate help:\n📧 support@ogninja.com\n💬 Live chat available 24/7')}>
+            🥷 SUMMON A NINJA
+          </span>
         </button>
       </div>
     </div>

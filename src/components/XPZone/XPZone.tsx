@@ -198,7 +198,7 @@ const XPZone = () => {
 
                 <div className="text-center">
                   <button className="bg-gradient-to-r from-neon-green to-neon-purple text-black font-black py-3 px-8 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider">
-                    <span onClick={() => setShowBoostModal(true)} className="cursor-pointer">🚀 BOOST XP</span>
+                    <span onClick={() => setShowBoostModal(true)}>🚀 BOOST XP</span>
                   </button>
                 </div>
               </div>
@@ -302,7 +302,9 @@ const XPZone = () => {
                 </div>
               </div>
               <button className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider">
-                ACTIVATE BOOST
+                <span onClick={() => alert('🔥 Double XP Activated!\n\nYou are now earning 2x XP on all activities for the next 48 hours!')}>
+                  ACTIVATE BOOST
+                </span>
               </button>
             </motion.div>
 
@@ -321,10 +323,14 @@ const XPZone = () => {
               </p>
               <div className="space-y-3">
                 <button className="w-full bg-neon-green text-black font-bold py-3 rounded-xl hover:bg-neon-green/90 transition-colors uppercase tracking-wider">
-                  ENTER RAFFLE
+                  <span onClick={() => window.location.href = '/raffle'}>
+                    ENTER RAFFLE
+                  </span>
                 </button>
                 <button className="w-full border border-neon-purple text-neon-purple font-bold py-3 rounded-xl hover:bg-neon-purple/10 transition-colors uppercase tracking-wider">
-                  SHARE REFERRAL
+                  <span onClick={() => alert('🔗 Referral Link Copied!\n\nhttps://ogninja.com/ref/shadowwalker\n\nShare this link to earn 100 XP for each friend who joins!')}>
+                    SHARE REFERRAL
+                  </span>
                 </button>
               </div>
             </motion.div>
