@@ -435,6 +435,9 @@ const Profile = () => {
                   <span onClick={() => alert('🔐 Two-Factor Authentication\n\nThis would set up 2FA for enhanced account security. Feature coming soon!')}>
                     ENABLE 2FA
                   </span>
+                </button>
+                <button className="w-full bg-neon-purple text-white font-bold py-3 rounded-xl hover:bg-neon-purple/90 transition-colors uppercase tracking-wider">
+                  <span onClick={() => window.location.href = '/shop'}>
                     🎟️ Enter Raffle
                   </span>
                 </button>
