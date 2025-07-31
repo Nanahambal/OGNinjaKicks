@@ -263,7 +263,9 @@ const HallOfFame = () => {
                 <p className="text-gray-400 mb-4">Want your photo here? Tag us or upload directly from your profile.</p>
                 <button className="bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 flex items-center space-x-2 mx-auto">
                   <Upload size={20} />
-                  <span>UPLOAD FLEX SHOT</span>
+                  <span onClick={() => alert('📸 Upload Feature!\n\nThis would open a photo upload dialog in a real app. Share your best sneaker photos with the community!')}>
+                    UPLOAD FLEX SHOT
+                  </span>
                 </button>
               </div>
             </motion.div>

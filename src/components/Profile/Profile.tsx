@@ -318,7 +318,9 @@ const Profile = () => {
                       </div>
                     </div>
                     <button className="bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300">
-                      SAVE CHANGES
+                      <span onClick={() => alert('💾 Settings Saved!\n\nYour account settings have been updated successfully.')}>
+                        SAVE CHANGES
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -367,7 +369,9 @@ const Profile = () => {
                       </div>
                     </div>
                     <button className="bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300">
-                      SAVE PREFERENCES
+                      <span onClick={() => alert('👟 Size Preferences Saved!\n\nYour size preferences have been updated and will be used for future purchases.')}>
+                        SAVE PREFERENCES
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -428,13 +432,21 @@ const Profile = () => {
               </h3>
               <div className="space-y-3">
                 <button className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider">
-                  🎟️ Enter Raffle
+                  <span onClick={() => alert('🔐 Two-Factor Authentication\n\nThis would set up 2FA for enhanced account security. Feature coming soon!')}>
+                    ENABLE 2FA
+                  </span>
+                    🎟️ Enter Raffle
+                  </span>
                 </button>
                 <button className="w-full bg-neon-purple text-white font-bold py-3 rounded-xl hover:bg-neon-purple/90 transition-colors uppercase tracking-wider">
-                  🛒 Browse Vault
+                  <span onClick={() => window.location.href = '/shop'}>
+                    🛒 Browse Vault
+                  </span>
                 </button>
                 <button className="w-full border border-neon-green text-neon-green font-bold py-3 rounded-xl hover:bg-neon-green/10 transition-colors uppercase tracking-wider">
-                  📊 View Stats
+                  <span onClick={() => window.location.href = '/loyalty'}>
+                    📊 View Stats
+                  </span>
                 </button>
               </div>
             </motion.div>

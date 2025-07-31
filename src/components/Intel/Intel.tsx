@@ -295,7 +295,9 @@ const Intel = () => {
                   Get notified when breaking news drops
                 </p>
                 <button className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-bold py-3 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300">
-                  ENABLE ALERTS
+                  <span onClick={() => alert('🔔 Intel Alerts Enabled!\n\nYou will now receive notifications for breaking sneaker news and exclusive drops!')}>
+                    ENABLE ALERTS
+                  </span>
                 </button>
               </div>
             </motion.div>

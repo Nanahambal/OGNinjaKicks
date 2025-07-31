@@ -119,7 +119,8 @@ const Dashboard = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-black py-4 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 text-lg tracking-wider"
+                  onClick={() => window.location.href = '/raffle'}
+                  className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-black py-4 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 text-lg tracking-wider cursor-pointer"
                 >
                   🚨 SET DROP ALERT
                 </motion.button>
@@ -222,13 +223,22 @@ const Dashboard = () => {
             >
               <h2 className="text-xl font-display font-black text-white mb-6 tracking-wider">QUICK ACTIONS</h2>
               <div className="space-y-4">
-                <button className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-black py-4 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider">
+                <button 
+                  onClick={() => window.location.href = '/raffle'}
+                  className="w-full bg-gradient-to-r from-neon-green to-neon-purple text-black font-black py-4 rounded-xl hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300 uppercase tracking-wider"
+                >
                   🎟️ Enter Weekly Raffle
                 </button>
-                <button className="w-full bg-gradient-to-r from-neon-purple to-neon-green text-black font-black py-4 rounded-xl hover:shadow-lg hover:shadow-neon-purple/25 transition-all duration-300 uppercase tracking-wider">
+                <button 
+                  onClick={() => window.location.href = '/shop'}
+                  className="w-full bg-gradient-to-r from-neon-purple to-neon-green text-black font-black py-4 rounded-xl hover:shadow-lg hover:shadow-neon-purple/25 transition-all duration-300 uppercase tracking-wider"
+                >
                   🔥 Browse Vault
                 </button>
-                <button className="w-full border-2 border-neon-green text-neon-green font-black py-4 rounded-xl hover:bg-neon-green/10 transition-all duration-300 uppercase tracking-wider">
+                <button 
+                  onClick={() => window.location.href = '/raffle'}
+                  className="w-full border-2 border-neon-green text-neon-green font-black py-4 rounded-xl hover:bg-neon-green/10 transition-all duration-300 uppercase tracking-wider"
+                >
                   🏆 Check Results
                 </button>
               </div>
